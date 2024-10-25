@@ -15,7 +15,7 @@ This script is designed to work with the tool [Sn1per](https://github.com/1N3/sn
 
 ## Prerequisites
 
-- **sniper**: Install and set up [Sn1per](https://github.com/1N3/sn1per) for use with `sudo`.
+- **sniper**: Install and set up [Sn1per](https://github.com/1N3/sn1per) for use with `sudo`, You can install it by run the file 'install.sh' with root privilages
 
 ## Usage
 
