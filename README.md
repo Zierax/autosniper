@@ -1,4 +1,4 @@
-# Sniper URL Scanner Script
+# autosniper URL Scanner Script
 
 This Bash script reads a file of URLs (both `http://` and `https://`), loops through each target, and runs the `sniper` command on each. It provides an interactive option to skip to the next target or stop the script when pressing `CTRL+C`. At the end of the scan, it outputs a list of all successfully scanned domains.
 
@@ -35,7 +35,7 @@ This script is designed to work with the tool [Sn1per](https://github.com/1N3/sn
 
 4. **Run the Script**:
     ```bash
-    ./sniper_script.sh urls.txt
+    autosniper urls.txt
     ```
 
 ### Example Execution
