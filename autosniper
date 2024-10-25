@@ -1,0 +1,70 @@
+#!/bin/bash
+
+# Color definitions
+GREEN="\033[0;32m"
+RED="\033[0;31m"
+YELLOW="\033[1;33m"
+NC="\033[0m" # No color
+
+# Check if a file is provided
+if [ -z "$1" ]; then
+    echo -e "${RED}Usage: $0 <file_with_urls>${NC}"
+    exit 1
+fi
+
+# Check if file exists and is readable
+input_file="$1"
+if [ ! -f "$input_file" ] || [ ! -r "$input_file" ]; then
+    echo -e "${RED}Error: File '$input_file' does not exist or is not readable.${NC}"
+    exit 1
+fi
+
+# Initialize an array to store scanned targets
+scanned_targets=()
+
+# Function to handle CTRL+C (SIGINT)
+trap ctrl_c INT
+
+# CTRL+C handler
+function ctrl_c() {
+    echo -e "\n${YELLOW}[!] Detected CTRL+C${NC}"
+    read -p "Do you want to skip to the next target? (y/n): " choice
+    if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
+        echo -e "${YELLOW}[*] Skipping to the next target...${NC}"
+        return 0  # Skip to the next target
+    else
+        echo -e "${RED}[!] Stopping the script.${NC}"
+        exit 0
+    fi
+}
+
+# Main loop
+while IFS= read -r url; do
+    # Basic validation for URL format
+    if [[ ! "$url" =~ ^https?:// ]]; then
+        echo -e "${RED}[!] Invalid URL format: $url. Skipping...${NC}"
+        continue
+    fi
+    
+    # Remove schema (http:// or https://)
+    target_without_schema="${url#http://}"
+    target_without_schema="${target_without_schema#https://}"
+    
+    # Run sniper command
+    echo -e "${GREEN}[*] Scanning $url with sniper...${NC}"
+    sudo sniper -t "$url" -w "$target_without_schema"
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}[!] Error occurred while scanning $url${NC}"
+        continue
+    fi
+
+    # Log scanned target
+    scanned_targets+=("$url")
+
+done < "$input_file"
+
+# Print all scanned domains
+echo -e "\n${GREEN}[*] All scanned domains:${NC}"
+for target in "${scanned_targets[@]}"; do
+    echo "$target"
+done
