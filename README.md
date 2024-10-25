@@ -15,18 +15,18 @@ This script is designed to work with the tool [Sn1per](https://github.com/1N3/sn
 
 ## Prerequisites
 
-- **sniper**: Install and set up [Sn1per](https://github.com/1N3/sn1per) for use with `sudo`, You can install it by run the file 'install.sh' with root privilages
+- **sniper**: Install and set up [Sn1per](https://github.com/1N3/sn1per) for use with `sudo`, You can install sn1per by run the file `install.sh` with root privilages
 
 ## Usage
 
-1. **Clone or Download**: Save the script as `sniper_script.sh`.
+1. **Clone or Download**: Save the repo `git clone https://github.com/Zierax/autosniper`.
 
-2. **Make the Script Executable**:
+2. **Run The Installation File**:
     ```bash
-    chmod +x sniper_script.sh
+    bash install.sh
     ```
 
-3. **Prepare a File of URLs**:
+3. **Prepare a File of URLs For SCANNING**:
    - Create a text file (e.g., `urls.txt`) with one URL per line:
      ```plaintext
      https://example.com
